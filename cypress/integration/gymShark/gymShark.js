@@ -93,13 +93,12 @@ When("I add a random item to the basket", () => {
 });
 
 Then("I verify that the item has been added successfully", () => {
+  // Verify the values on Summary page
   yourBagPage.yourBagTitle().should('be.visible')
   yourBagPage.productName().should('have.text', productName)
     if (productFit) {
       yourBagPage.productFit().contains(productFit, { matchCase: false })
   }
-
-  // Verify the values on Summary page
   yourBagPage.productColourAndSize().contains(productColour, { matchCase: false })
   yourBagPage.productColourAndSize().contains(randSize, { matchCase: false })
   yourBagPage.priceOneProduct().should('include.text', productPrice)
