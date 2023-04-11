@@ -1,5 +1,4 @@
 Feature: Gym Shark website tests
-   # npx cypress run --env tags="@GymSharkTestOne" --headed --browser edge
 
     @GymSharkTestOne
     Scenario: Add a random product from Mens New Releases
