@@ -1,15 +1,12 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import GymSharkPage from "../../../pageObjects/GymSharkPage";
-import ProductPage from "../../../pageObjects/ProductPage";
-import YourBagPage from "../../../pageObjects/YourBagPage";
-import FullBagPage from "../../../pageObjects/FullBagPage";
-import CheckoutPage from "../../../pageObjects/CheckoutPage";
+import {FullBagLocators, GymSharkLocators, ProductLocators, YourBagLocators} from "../../../locators/gymSharkLocators";
+import CheckoutPage from "../../../pages/checkoutPage";
 
-const gymSharkPage = new GymSharkPage();
-const productPage = new ProductPage();
-const yourBagPage = new YourBagPage();
-const fullBagPage = new FullBagPage();
-const checkoutPage = new CheckoutPage();
+const gymSharkLocators = new GymSharkLocators();
+const productLocators = new ProductLocators();
+const yourBagLocators = new YourBagLocators();
+const fullBagLocators = new FullBagLocators();
+
 let productName;
 let productFit;
 let productColour; 
@@ -18,11 +15,11 @@ let randSize;
 
 Given("I go to Mens New Releases", () => {
   cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
-  gymSharkPage.getHomepage().acceptCookies().openMainMenu().goToMen().goToNewReleases()
+  gymSharkLocators.getHomepage().acceptCookies().openMainMenu().goToMen().goToNewReleases()
 });
 
 When("I add a random item to the basket", () => {
-  gymSharkPage
+  gymSharkLocators
     .itemsList()
     .should("be.visible")
     .then((itemsList) => {
@@ -57,28 +54,29 @@ When("I add a random item to the basket", () => {
         }
       })
     
-      productPage.productName().should("have.text", productName);
-      productPage.productPrice().should("have.text", productPrice);
+      productLocators.productName().should("have.text", productName);
+      productLocators.productPrice().should("have.text", productPrice);
 
       // Product Fit is not visible on product page for all-size items
-      cy.elementExists(productPage.productFitSelector()).then(
+      cy.elementExists(productLocators.productFitSelector()).then(
         (productFitElement) => {
           if (productFitElement) {
-            productPage.productFit().should("have.text", productFit);
+            productLocators.productFit().should("have.text", productFit);
           }
         }
       );
 
       // Colour is not visible on product page for single-colour items
-      cy.elementExists(productPage.productColourSelector()).then(
+      cy.elementExists(productLocators.productColourSelector()).then(
         (productColourElement) => {
           if (productColourElement) {
-            productPage.productColour().should("have.text", productColour);
+            productLocators.productColour().should("have.text", productColour);
           }
         }
       );
 
     // Select a random available size
+    cy.wait(1500)
     cy.get('button[data-locator-id^="pdp-size-"]:not([class*="--out-of-stock"])')
     .then($buttons => {
       const availableSizes = $buttons.toArray().map($el => $el.textContent);
@@ -89,63 +87,58 @@ When("I add a random item to the basket", () => {
       cy.get(`button[data-locator-id="pdp-size-${randSize}-select"]`).click({ force: true });
 });
     });
-  productPage.addToBag().click({ force: true })
+  productLocators.addToBag().click({ force: true })
 });
 
 Then("I verify that the item has been added successfully", () => {
-  yourBagPage.yourBagTitle().should('be.visible')
-  yourBagPage.productName().should('have.text', productName)
+  yourBagLocators.yourBagTitle().should('be.visible')
+  yourBagLocators.productName().should('have.text', productName)
     if (productFit) {
-      yourBagPage.productFit().contains(productFit, { matchCase: false })
+      yourBagLocators.productFit().contains(productFit, { matchCase: false })
   }
 
   // Verify the values on Summary page
-  yourBagPage.productColourAndSize().contains(productColour, { matchCase: false })
-  yourBagPage.productColourAndSize().contains(randSize, { matchCase: false })
-  yourBagPage.priceOneProduct().should('include.text', productPrice)
-  yourBagPage.priceTotal().should('include.text', productPrice)
-  yourBagPage.priceSelectedItem().should('include.text', productPrice)
+  yourBagLocators.productColourAndSize().contains(productColour, { matchCase: false })
+  yourBagLocators.productColourAndSize().contains(randSize, { matchCase: false })
+  yourBagLocators.priceOneProduct().should('include.text', productPrice)
+  yourBagLocators.priceTotal().should('include.text', productPrice)
+  yourBagLocators.priceSelectedItem().should('include.text', productPrice)
 
   // Close the summary and verify the number on the basket icon
-  yourBagPage.closeXIcon().click()
-  productPage.cartCount().should('have.text', '1')
+  yourBagLocators.closeXIcon().click()
+  productLocators.cartCount().should('have.text', '1')
   
   // Open basket and re-verifythe  values
-  productPage.iconBag().click({ force: true })
-  yourBagPage.productName().should('include.text', productName)
+  productLocators.iconBag().click({ force: true })
+  yourBagLocators.productName().should('include.text', productName)
   if (productFit) {
-  yourBagPage.productFit().contains(productFit, { matchCase: false })
+  yourBagLocators.productFit().contains(productFit, { matchCase: false })
   }
-  yourBagPage.productColourAndSize().contains(productColour, { matchCase: false })
-  yourBagPage.productColourAndSize().contains(randSize, { matchCase: false })
-  yourBagPage.priceOneProduct().should('include.text', productPrice)
-  yourBagPage.priceTotal().should('include.text', productPrice)
-  yourBagPage.priceSelectedItem().should('include.text', productPrice)
+  yourBagLocators.productColourAndSize().contains(productColour, { matchCase: false })
+  yourBagLocators.productColourAndSize().contains(randSize, { matchCase: false })
+  yourBagLocators.priceOneProduct().should('include.text', productPrice)
+  yourBagLocators.priceTotal().should('include.text', productPrice)
+  yourBagLocators.priceSelectedItem().should('include.text', productPrice)
 
   // View full bag and verify the values again
-  yourBagPage.viewFullBag().click()
-  fullBagPage.productName().should('include.text', productName)
+  yourBagLocators.viewFullBag().click()
+  fullBagLocators.productName().should('include.text', productName)
   if (productFit) {
-  fullBagPage.productFit().contains(productFit, { matchCase: false })
+  fullBagLocators.productFit().contains(productFit, { matchCase: false })
   }
-  fullBagPage.productColourAndSize().contains(productColour, { matchCase: false })
-  fullBagPage.productColourAndSize().contains(randSize, { matchCase: false })
-  fullBagPage.priceOneProduct().should('include.text', productPrice)
-  fullBagPage.priceTotal().should('include.text', productPrice)
-  fullBagPage.priceSelectedItem().should('include.text', productPrice)
+  fullBagLocators.productColourAndSize().contains(productColour, { matchCase: false })
+  fullBagLocators.productColourAndSize().contains(randSize, { matchCase: false })
+  fullBagLocators.priceOneProduct().should('include.text', productPrice)
+  fullBagLocators.priceTotal().should('include.text', productPrice)
+  fullBagLocators.priceSelectedItem().should('include.text', productPrice)
 
 });
 
 Then("I verify values on checkout", () => {
   // Start checkout and verify the values again
-  fullBagPage.checkoutButton().click({ force: true })
-  checkoutPage.productNameAndColour().contains(productName, { matchCase: false })
-  checkoutPage.productNameAndColour().contains(productColour, { matchCase: false })
-  if (productFit) {checkoutPage.productFit().should('include.text', productFit)}
-  checkoutPage.priceOneProduct().should('include.text', productPrice)
-  checkoutPage.priceSubtotal().should('include.text', productPrice)
-  checkoutPage.priceTotal().should('include.text', productPrice)
-
+  fullBagLocators.checkoutButton().click({ force: true })
+  CheckoutPage.assertDisplayedValues(productName, productColour, productFit, productPrice)
+  
 });
 
 
