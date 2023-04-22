@@ -1,10 +1,5 @@
 import {
-  CheckoutLocators,
-  FullBagLocators,
-  GroceryShop,
-  GymSharkLocators,
-  ProductLocators,
-  YourBagLocators,
+  ProductLocators
 } from "../locators/gymSharkLocators";
 
 const productLocators = new ProductLocators();
@@ -34,7 +29,7 @@ export default class ProductPage {
   }
 
   static selectRandomAvailableSize() {
-    /*Select a random size from in-stock sizes. eEturn the selected size. */
+    /*Select a random size from in-stock sizes. Return the selected size. */
     cy.wait(1500);
     return productLocators.getAvailableSizesList().then(($sizes) => {
       const availableSizes = $sizes.toArray().map(($el) => $el.textContent);
@@ -42,11 +37,11 @@ export default class ProductPage {
       const randSize = availableSizes[randomIndex];
       cy.log(`AVAILABLE SIZES: ${availableSizes}`);
       cy.log(`RANDOM SIZE SELECTED: ${randSize}`);
-      cy.get(`button[data-locator-id="pdp-size-${randSize}-select"]`)
+      return cy.get(`button[data-locator-id="pdp-size-${randSize}-select"]`)
         .click({ force: true })
         .then(() => {
           return {
-            randSize,
+            randSize
           };
         });
     });

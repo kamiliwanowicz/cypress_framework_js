@@ -1,11 +1,7 @@
 import {
-  CheckoutLocators,
-  FullBagLocators,
   GymSharkLocators,
   ProductLocators,
-  YourBagLocators,
 } from "../locators/gymSharkLocators";
-import CoreMethods from "./coreMethods";
 
 const gymSharkLocators = new GymSharkLocators();
 const productLocators = new ProductLocators();
@@ -41,17 +37,16 @@ export default class AllItemsPage {
               productColour,
               productFit,
               productPrice,
-            }
-          })
-      })
+            };
+          });
+      });
   }
 
   static verifyNumberOfItemsInBasket(itemsNumber) {
-    productLocators.cartCount().should('have.text', itemsNumber)
-}
+    productLocators.cartCount().should("have.text", itemsNumber);
+  }
 
   static clickOnBasket() {
-    productLocators.iconBag().click({ force: true })
-
+    productLocators.iconBag().click({ force: true });
   }
 }

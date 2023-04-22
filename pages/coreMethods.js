@@ -1,10 +1,5 @@
 import {
-  CheckoutLocators,
-  FullBagLocators,
-  GroceryShop,
-  GymSharkLocators,
-  ProductLocators,
-  YourBagLocators,
+  GymSharkLocators
 } from "../locators/gymSharkLocators";
 
 const gymSharkLocators = new GymSharkLocators();
@@ -36,8 +31,4 @@ export default class CoreMethods {
         }
       });
   }
-  static getRandomNumberInRange(range) {
-    /* Get a random number in a given range */
-    const randomElement = Math.floor(Math.random() * range);
-      };
 }

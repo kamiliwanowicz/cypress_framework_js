@@ -1,5 +1,4 @@
-class CheckoutLocators
-{
+class CheckoutLocators {
 productNameAndColour() {return cy.get('*[class^="product__description__name order-summary"]')}
 productFit() {return cy.get('.product__description > :nth-child(3)')}
 productSize() {return cy.get('.product__description__variant')}
@@ -9,8 +8,7 @@ priceTotal() {return cy.get('.payment-due__price')}
 checkoutButton() {return cy.get('a').contains('Checkout securely')}
 }
 
-class FullBagLocators
-{
+class FullBagLocators {
 yourBagTitle() {return cy.get('h1').contains('Your bag')}
 productName() {return cy.get('*[class^="product-card_title"]')}
 productFit() {return cy.get('*[class^="product-card_featured-selection"]')}
@@ -46,8 +44,7 @@ class GymSharkLocators {
     getProductPrice(productCard) {return productCard.find(this.productPrice_).text()}
   }
 
-  class ProductLocators
-  {
+  class ProductLocators {
   productName() {return cy.get('*[class^="product-information_title"]')}
   productFit() {return cy.get('*[class^="product-information_fit"]')}
   productFitSelector() {return '*[class^="product-information_fit"]'}
@@ -62,8 +59,7 @@ class GymSharkLocators {
   
   }
   
-  class YourBagLocators
-  {
+  class YourBagLocators {
   yourBagTitle() {return cy.get('h2').contains('Your bag')}
   productName() {return cy.get('*[class^="product-card_title"]')}
   productFit() {return cy.get('*[class^="product-card_featured-selection"]')}
@@ -77,17 +73,4 @@ class GymSharkLocators {
   }
 
 
-  class GroceryShop
-  {
-  productSearch() {return cy.get('.search-keyword')}
-  visibleProducts() {return cy.get('.product:visible')}
-  productsList() {return cy.get('.products').find('.product')}
-  getCart() {return cy.get('img[alt=Cart]')}
-  cartProductsList() {return cy.get('.cart .cart-preview.active').find('.product-name')}
-  proceedToCheckout() {return cy.contains('PROCEED TO CHECKOUT')}
-  productSummaryTableRow(row) {return cy.get('.products #productCartTables tbody').find('tr').eq(row)}
-  productImageSrc(row) {return cy.get('.products #productCartTables tbody').find('tr').eq(row).find('.product-image')}
-  }
-
-
-  export default {CheckoutLocators, FullBagLocators, GroceryShop, GymSharkLocators, ProductLocators, YourBagLocators}
+  export default {CheckoutLocators, FullBagLocators, GymSharkLocators, ProductLocators, YourBagLocators}

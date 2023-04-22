@@ -1,12 +1,12 @@
 
-import {CheckoutLocators, FullBagLocators, GroceryShop, GymSharkLocators, ProductLocators, YourBagLocators} from "../locators/gymSharkLocators";
+import {CheckoutLocators, FullBagLocators} from "../locators/gymSharkLocators";
 
 const checkoutLocators = new CheckoutLocators();
 const fullBagLocators = new FullBagLocators();
 
 export default class CheckoutPage {
 
-static assertDisplayedValues(productName, productColour, productFit, productPrice) {
+static verifyValuesOnCheckoutPage(productName, productFit, productColour, productPrice, productSize) {
   fullBagLocators.checkoutButton().click({ force: true })
   checkoutLocators.productNameAndColour().contains(productName, { matchCase: false })
   checkoutLocators.productNameAndColour().contains(productColour, { matchCase: false })
@@ -14,6 +14,7 @@ static assertDisplayedValues(productName, productColour, productFit, productPric
   checkoutLocators.priceOneProduct().should('include.text', productPrice)
   checkoutLocators.priceSubtotal().should('include.text', productPrice)
   checkoutLocators.priceTotal().should('include.text', productPrice)
+  checkoutLocators.productSize().contains(productSize, { matchCase: false })
 }
 static clickCheckout() {
   fullBagLocators.checkoutButton().click({ force: true })

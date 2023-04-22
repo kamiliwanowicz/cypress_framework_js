@@ -1,10 +1,5 @@
 import {
-  CheckoutLocators,
-  FullBagLocators,
-  GroceryShop,
-  GymSharkLocators,
-  ProductLocators,
-  YourBagLocators,
+  YourBagLocators
 } from "../locators/gymSharkLocators";
 
 const yourBagLocators = new YourBagLocators();
@@ -28,4 +23,5 @@ export default class SummaryPage {
   static closeSummary() {
     yourBagLocators.closeXIcon().click()
   }
+
 }
