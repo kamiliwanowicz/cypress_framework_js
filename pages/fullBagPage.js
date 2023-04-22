@@ -16,7 +16,9 @@ static verifyValuesOnFullBagPage(productName, productFit, productColour, product
   fullBagLocators.productFit().contains(productFit, { matchCase: false })
   }
   fullBagLocators.productColourAndSize().contains(productColour, { matchCase: false })
+  if (productSize) {
   fullBagLocators.productColourAndSize().contains(productSize, { matchCase: false })
+  }
   fullBagLocators.priceOneProduct().should('include.text', productPrice)
   fullBagLocators.priceTotal().should('include.text', productPrice)
   fullBagLocators.priceSelectedItem().should('include.text', productPrice)

@@ -1,6 +1,4 @@
-import {
-  ProductLocators
-} from "../locators/gymSharkLocators";
+import { ProductLocators } from "../locators/gymSharkLocators";
 
 const productLocators = new ProductLocators();
 
@@ -29,25 +27,35 @@ export default class ProductPage {
   }
 
   static selectRandomAvailableSize() {
-    /*Select a random size from in-stock sizes. Return the selected size. */
+    /*Select a random size from in-stock sizes. Return the selected size or '0' if no sizes are available for that item.*/
     cy.wait(1500);
-    return productLocators.getAvailableSizesList().then(($sizes) => {
-      const availableSizes = $sizes.toArray().map(($el) => $el.textContent);
-      const randomIndex = Math.floor(Math.random() * availableSizes.length);
-      const randSize = availableSizes[randomIndex];
-      cy.log(`AVAILABLE SIZES: ${availableSizes}`);
-      cy.log(`RANDOM SIZE SELECTED: ${randSize}`);
-      return cy.get(`button[data-locator-id="pdp-size-${randSize}-select"]`)
-        .click({ force: true })
-        .then(() => {
-          return {
-            randSize
-          };
-        });
-    });
+    return cy
+      .get(
+        'button[data-locator-id^="pdp-size-"]:not([class*="--out-of-stock"])'
+      )
+      .should(Cypress._.noop)
+      .then(($sizes) => {
+        if ($sizes.length > 0) {
+          const availableSizes = $sizes.toArray().map(($el) => $el.textContent);
+          const randomIndex = Math.floor(Math.random() * availableSizes.length);
+          const randSize = availableSizes[randomIndex];
+          cy.log(`AVAILABLE SIZES: ${availableSizes}`);
+          cy.log(`RANDOM SIZE SELECTED: ${randSize}`);
+          return cy
+            .get(`button[data-locator-id="pdp-size-${randSize}-select"]`)
+            .click({ force: true })
+            .then(() => {
+              return {
+                randSize
+              };
+            });
+        } else {
+          return 0;
+        }
+      });
   }
 
   static addToBag() {
-    productLocators.addToBag().click({ force: true })
-}
+    productLocators.addToBag().click({ force: true });
+  }
 }

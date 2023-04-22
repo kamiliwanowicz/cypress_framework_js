@@ -14,7 +14,9 @@ export default class SummaryPage {
 
     // Verify the values on Summary page
     yourBagLocators.productColourAndSize().contains(productColour, { matchCase: false })
+    if (productSize) {
     yourBagLocators.productColourAndSize().contains(productSize, { matchCase: false })
+    }
     yourBagLocators.priceOneProduct().should('include.text', productPrice)
     yourBagLocators.priceTotal().should('include.text', productPrice)
     yourBagLocators.priceSelectedItem().should('include.text', productPrice)

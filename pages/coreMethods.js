@@ -1,6 +1,4 @@
-import {
-  GymSharkLocators
-} from "../locators/gymSharkLocators";
+import { GymSharkLocators } from "../locators/gymSharkLocators";
 
 const gymSharkLocators = new GymSharkLocators();
 
@@ -10,14 +8,16 @@ export default class CoreMethods {
     cy.intercept({ resourceType: /xhr|fetch/ }, { log: false });
   }
 
-  static goToMensNewReleases() {
+  static goToNewReleases(type) {
     /*Navigate to Mens New Releases from an empty browser window.*/
-    gymSharkLocators
-      .getHomepage()
-      .acceptCookies()
-      .openMainMenu()
-      .goToMen()
-      .goToNewReleases();
+    gymSharkLocators.getHomepage().acceptCookies().openMainMenu();
+    if (type == "men") {
+      gymSharkLocators.goToMen().goToMenNewReleases();
+    } else if (type == "women") {
+      gymSharkLocators.goToWomen().goToWomenNewReleases();
+    } else if (type == "accessories") {
+      gymSharkLocators.goToAccessories().goToAccessoriesShopAll().goToAccessoriesNewReleases();
+    }
   }
 
   static forbiddenPageWorkaround() {

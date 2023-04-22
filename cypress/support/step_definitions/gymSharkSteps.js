@@ -17,8 +17,9 @@ Before(() => {
   CoreMethods.dontLogXHRCallsInTestRunner()
 })
 
-Given("I go to Mens New Releases", () => {
-  CoreMethods.goToMensNewReleases()
+Given("I go to {string} New Releases", (type) => {
+  cy.log(type)
+  CoreMethods.goToNewReleases(type)
 });
 
 When("I select a random item", () => {
@@ -38,7 +39,12 @@ When("I verify details on Product page", () => {
 
 When("I select a random size", () => {
   ProductPage.selectRandomAvailableSize().then((sizeObject) => {
-    productSizeGlobal = sizeObject.randSize
+    if (sizeObject) {
+      productSizeGlobal = sizeObject.randSize
+    }
+    else {
+      productSizeGlobal = sizeObject
+    }
 }) 
 });
 

@@ -14,7 +14,9 @@ static verifyValuesOnCheckoutPage(productName, productFit, productColour, produc
   checkoutLocators.priceOneProduct().should('include.text', productPrice)
   checkoutLocators.priceSubtotal().should('include.text', productPrice)
   checkoutLocators.priceTotal().should('include.text', productPrice)
+  if (productSize) {
   checkoutLocators.productSize().contains(productSize, { matchCase: false })
+  }
 }
 static clickCheckout() {
   fullBagLocators.checkoutButton().click({ force: true })

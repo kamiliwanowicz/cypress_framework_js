@@ -25,7 +25,12 @@ class GymSharkLocators {
       this.acceptCookies_ = '#onetrust-accept-btn-handler'
       this.mainMenu_ = "button[aria-label='Main menu']"
       this.menCategory_ = '[aria-controls="panel-men"]'
-      this.newReleases_ = "a[href='https://uk.shop.gymshark.com/collections/new-releases/mens'] h3"
+      this.womenCategory_ = '[aria-controls="panel-women"]'
+      this.accessoriesCategory_ = '[aria-controls="panel-accessories"]'
+      this.menNewReleases_ = "a[href='https://uk.shop.gymshark.com/collections/new-releases/mens'] h3"
+      this.womenNewReleases_ = "a[href='https://uk.shop.gymshark.com/collections/new-releases/womens'] h3"
+      this.accessoriesShopAll_ = "button[data-locator-id=navigation-subCategories-shop_all-read]"
+      this.accessoriesNewReleases = "section[id='panel-accessories'] a[title='New Releases']"
       this.itemsList_ = '*[class^="product-grid_grid"]'
       this.productFit_ = '*[class^="product-card_product-fit"]'
       this.productColour_ = '*[class^="product-card_product-colour"]'
@@ -36,7 +41,12 @@ class GymSharkLocators {
     acceptCookies() { cy.get(this.acceptCookies_).click(); return this }
     openMainMenu() { cy.get(this.mainMenu_).click(); return this }
     goToMen() { cy.get(this.menCategory_).click(); return this }
-    goToNewReleases() { cy.get(this.newReleases_).click({ force: true }); return this }
+    goToMenNewReleases() { cy.get(this.menNewReleases_).click({ force: true }); return this }
+    goToWomen() { cy.get(this.womenCategory_).click(); return this }
+    goToWomenNewReleases() { cy.get(this.womenNewReleases_).click({ force: true }); return this }
+    goToAccessories() { cy.get(this.accessoriesCategory_).click(); return this }
+    goToAccessoriesShopAll() { cy.get(this.accessoriesShopAll_).click(); return this }
+    goToAccessoriesNewReleases() {cy.get(this.accessoriesNewReleases).click(); return this }
     itemsList() { return cy.get(this.itemsList_).find('article'); }
     getProductFit(productCard) {return productCard.find(this.productFit_).text()}
     getProductName(productCard) {return productCard.find("a").attr("title")}
