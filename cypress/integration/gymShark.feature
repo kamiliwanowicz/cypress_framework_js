@@ -1,7 +1,7 @@
 Feature: Gym Shark website tests
 
     @GymSharkTestOne
-    Scenario Outline: Add a random product from Mens New Releases
+    Scenario Outline: Add a random product from New Releases
         Given I go to "<type>" New Releases
         And I select a random item
         And I verify details on Product page
@@ -13,7 +13,7 @@ Feature: Gym Shark website tests
         And I click on basket icon
         And I verify item has been added successfully to Summary page
         And I verify values on Full Bag page
-        And I verify values on checkout
+        And I verify values on Checkout page
 
         Examples:
             | type        |

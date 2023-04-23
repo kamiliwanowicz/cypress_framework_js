@@ -18,7 +18,7 @@ Before(() => {
 })
 
 Given("I go to {string} New Releases", (type) => {
-  cy.log(type)
+  cy.task('log', `Running test for ${type} type.`)
   CoreMethods.goToNewReleases(type)
 });
 
@@ -73,7 +73,7 @@ Then("I verify values on Full Bag page", () => {
   FullBagPage.verifyValuesOnFullBagPage(productNameGlobal, productFitGlobal, productColourGlobal, productPriceGlobal, productSizeGlobal)
 });
 
-Then("I verify values on checkout", () => {
+Then("I verify values on Checkout page", () => {
   CheckoutPage.clickCheckout()
   CheckoutPage.verifyValuesOnCheckoutPage(productNameGlobal, productFitGlobal, productColourGlobal, productPriceGlobal, productSizeGlobal)
 });
