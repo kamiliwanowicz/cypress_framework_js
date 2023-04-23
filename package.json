@@ -1,0 +1,31 @@
+{
+  "name": "cypress_framework_js",
+  "version": "1.0.0",
+  "description": "Cypress test framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run "
+  },
+  "author": "Kamil Iwanowicz",
+  "license": "ISC",
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "latest",
+    "@cypress/browserify-preprocessor": "latest",
+    "cypress": "latest",
+    "multiple-cucumber-html-reporter": "^3.3.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "messages": {
+      "enabled": true,
+      "output": "reports/messages.json"
+    },
+    "json": {
+      "enabled": true,
+      "output": "reports/report.json"
+    },
+    "html": {
+      "enabled": true,
+      "output": "reports/report.html"
+    }
+  }
+}
